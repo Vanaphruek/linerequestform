@@ -27,24 +27,28 @@
 <script src="https://static.line-scdn.net/liff/edge/versions/2.15.0/sdk.js"></script>
 <script>
     
-    function getUserProfile(){
-	    liff.getProfile().then(profile => {
-		 let userId = profile.userId;
-                 let displayName = profile.displayName;
-                 let pictureUrl = profile.pictureUrl;
-		 let decodedIDToken = append(liff.getDecodedIDToken().email);
-		 let url = "https://script.google.com/macros/s/AKfycbxfRJaLXU4M_NqVDZyIz8p6D-vU0dE7VulqLKHLJ-d5SWc5tRY8a63yRZsQ7qfGsdCExQ/exec?userId=" + userId + "&displayName=" + displayName + "&pictureUrl=" + pictureUrl;
+   
+	function runApp() {
+        liff.getProfile().then(profile => {
+            let userId = profile.userId;
+            let displayName = profile.displayName;
+            let pictureUrl = profile.pictureUrl;
+            let url = "https://script.google.com/macros/s/AKfycbxfRJaLXU4M_NqVDZyIz8p6D-vU0dE7VulqLKHLJ-d5SWc5tRY8a63yRZsQ7qfGsdCExQ/exec?userId=" + userId + "&displayName=" + displayName + "&pictureUrl=" + pictureUrl;
             document.getElementById("formframe").src = url;
-			}).catch(err => console.error(err));
+			let decodedIDToken = liff.getDecodedIDToken().email;
+        }).catch(err => console.error(err));
     }
-	
-	   liff.init({ liffId: "1657480956-5l8YN6kG" },()=>{
+
+	 	
+	  liff.init({ liffId: "1657480956-5l8YN6kG" }, () => {
+        
 		if (liff.isLoggedIn()) {
-		    getUserProfile();
-		   } else {
-		     liff.login();
-			 }
-		},err=> console.error(err.code, error.message));
+            runApp();
+        } else {
+            liff.login();
+        }
+    }, err => console.error(err.code, error.message));
+
 		
 	
 </script>
